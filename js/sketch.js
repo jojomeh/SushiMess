@@ -18,9 +18,15 @@ var meshi;
 var floor;
 var bg;
 
+var mybird;
+
+
 function preload(){
   // load images
-  meshi = loadImage("data/face.png");
+//meshi = loadGif('data/test.gif');
+  meshi = loadAnimation("data/comp/standby1.png", "data/comp/standby17.png");
+
+
   floor = loadImage("data/base.png");
 }
 
@@ -85,7 +91,7 @@ function setup() {
 
 //Crear cajitas con mouse
 function mouseDragged() {
-  boxes.push(new Box(mouseX, mouseY, 5, 5));
+
 }
 
 
@@ -108,7 +114,7 @@ function keyPressed(k){
     kickstart = true;
     var posX = box.body.position.x;
     var posY = box.body.position.y;
-    Matter.Body.applyForce(box.body, { x:posX , y:posY }, { x: 0, y: -0.1 });
+    Matter.Body.applyForce(box.body, { x:posX , y:posY }, { x: 0, y: -0.15 });
 //Scroll cuando el objeto se mueve
       //bodyScroll();
   }
@@ -120,22 +126,24 @@ function keyPressed(k){
 $( document ).ready( function(){
 
   $('#top').on( 'touchstart', function(){
-    kickstart = true;
+
     var posX = box.body.position.x;
     var posY = box.body.position.y;
-    Matter.Body.applyForce(box.body, { x:posX , y:posY }, { x: 0, y: -.1 });
+    Matter.Body.applyForce(box.body, { x:posX , y:posY }, { x: 0, y: -0.1});
   });
 
   $('#left').on( 'touchstart', function(){
+    kickstart = true;
     var posX = box.body.position.x;
     var posY = box.body.position.y;
-    Matter.Body.applyForce(box.body, { x: posX, y: posY }, { x: -0.05, y:0 });
+    Matter.Body.applyForce(box.body, { x: posX, y: posY }, { x: -0.05, y:-0.1 });
   });
 
   $('#right').on( 'touchstart', function(){
+    kickstart = true;
     var posX = box.body.position.x;
     var posY = box.body.position.y;
-    Matter.Body.applyForce(box.body, { x: posX, y: posY }, { x: 0.05, y:0 });
+    Matter.Body.applyForce(box.body, { x: posX, y: posY }, { x: 0.05, y:-0.1});
   });
 
 });//documentready
@@ -152,7 +160,14 @@ function draw() {
     //console.log( box.body.position.y );
 
     box.show();
-    image(meshi,box.body.position.x - 60, box.body.position.y - 60, 120, 120);
+    push();
+    scale(0.5);
+  animation(meshi,box.body.position.x +90, box.body.position.y +390, 10, 10);
+  pop();
+
+
+
+
 
 ///Eliminar cosas del espacio
 for (var i = 0; i < boxes.length; i++) {
@@ -174,8 +189,7 @@ for (var i = 0; i < boxes.length; i++) {
     rectMode(CENTER);
 
     for( var i = 0; i < elements.length; i++ ){
-      rect( elements[ i ].position.x, elements[ i ].position.y, elements[ i ].width, elements[ i ].height );
-    }
+      rect( elements[ i ].position.x, elements[ i ].position.y, elements[ i ].width, elements[ i ].height );    }
 
     if( box.offScreen()){
       box.removeFromWorld();
