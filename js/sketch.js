@@ -51,13 +51,13 @@ function setup() {
     }
 
 //Plataformas para saltar
-    barra1  = Bodies.rectangle(200, 450, 100, 15, options);
+    barra1  = Bodies.rectangle(300, 450, 100, 15, options);
     barra1.width = 100;
     barra1.height= 15;
-    barra2 = Bodies.rectangle(300, 350, 100, 15, options);
+    barra2 = Bodies.rectangle(100, 350, 100, 15, options);
     barra2.width = 100;
     barra2.height= 15;
-    barra3 = Bodies.rectangle(100, 250, 100, 15, options);
+    barra3 = Bodies.rectangle(300, 250, 100, 15, options);
     barra3.width = 100;
     barra3.height= 15;
     barra4 = Bodies.rectangle(200, 100, 100, 15, options);
@@ -85,7 +85,7 @@ function setup() {
     elements.push(wallLeft);
     elements.push(wallRight);
     World.add(world, elements);
-    box = new Box(100, 509, 50, 100 );
+    box = new Box(160, 509, 50, 100 );
 }
 
 
@@ -128,7 +128,7 @@ function draw() {
     box.show();
     push();
     scale(0.5);
-    animation(meshi,box.body.position.x +90, box.body.position.y +390, 10, 10);
+    animation(meshi,box.body.position.x +150, box.body.position.y +390, 10, 10);
     pop();
 
 
@@ -169,7 +169,7 @@ for (var i = 0; i < boxes.length; i++) {
     }
 for( var i = 0; i < elements.length; i++ ){
   rectMode( CORNERS )
-  image(floor, elements[i].position.x - 55, elements[i].position.y - 50, 110, 90);
+  image(floor, elements[i].position.x - 55, elements[i].position.y - 60, 110, 110);
       }
       image(sushiBar, -100, -145);
 }
