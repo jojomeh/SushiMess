@@ -30,7 +30,7 @@ this.removeFromWorld = function (){
     rectMode(CENTER);
     noStroke(0);
     tint(255, 127);
-    fill(255,9,70);
+    fill(25,9,70);
 
 
 

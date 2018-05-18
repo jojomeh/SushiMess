@@ -17,6 +17,7 @@ var isGameOver;
 var meshi;
 var floor;
 var bg;
+var sushiBar;
 
 var mybird;
 
@@ -25,8 +26,6 @@ function preload(){
   // load images
 //meshi = loadGif('data/test.gif');
   meshi = loadAnimation("data/comp/standby1.png", "data/comp/standby17.png");
-
-
   floor = loadImage("data/base.png");
 }
 
@@ -41,6 +40,7 @@ function setup() {
     Engine.run(engine);
     reseSketch();
     bg = loadImage("data/fondo.png");
+    sushiBar = loadImage("data/frontbar.png")
     var options = {
       friction: 8,
       restitution:0,
@@ -89,40 +89,6 @@ function setup() {
 }
 
 
-//Crear cajitas con mouse
-function mouseDragged() {
-
-}
-
-
-
-//Mover objetos con teclado
-function keyPressed(k){
-  if( k.code == "ArrowRight"){
-    var posX = box.body.position.x;
-    var posY = box.body.position.y;
-    Matter.Body.applyForce(box.body, { x: posX, y: posY }, { x: 0.05, y:0 });
-  }
-
-  if( k.code == "ArrowLeft"){
-    var posX = box.body.position.x;
-    var posY = box.body.position.y;
-    Matter.Body.applyForce(box.body, { x: posX, y: posY }, { x: -0.05, y:0 });
-  }
-
-  if( k.code == "ArrowUp"){
-    kickstart = true;
-    var posX = box.body.position.x;
-    var posY = box.body.position.y;
-    Matter.Body.applyForce(box.body, { x:posX , y:posY }, { x: 0, y: -0.15 });
-//Scroll cuando el objeto se mueve
-      //bodyScroll();
-  }
-
-  if (k.code == "R"){
-  }
-}
-
 $( document ).ready( function(){
 
   $('#top').on( 'touchstart', function(){
@@ -162,11 +128,8 @@ function draw() {
     box.show();
     push();
     scale(0.5);
-  animation(meshi,box.body.position.x +90, box.body.position.y +390, 10, 10);
-  pop();
-
-
-
+    animation(meshi,box.body.position.x +90, box.body.position.y +390, 10, 10);
+    pop();
 
 
 ///Eliminar cosas del espacio
@@ -184,7 +147,7 @@ for (var i = 0; i < boxes.length; i++) {
 //Scroll de toda la hoja
   screenScroll();
     noStroke(0);
-    fill(105,105,105);
+    fill(105,1,105);
 //Plataformas para saltar
     rectMode(CENTER);
 
@@ -206,10 +169,11 @@ for (var i = 0; i < boxes.length; i++) {
     }
 for( var i = 0; i < elements.length; i++ ){
   rectMode( CORNERS )
-  image(floor, elements[i].position.x - 55, elements[i].position.y - 60, 110, 110);
+  image(floor, elements[i].position.x - 55, elements[i].position.y - 50, 110, 90);
+      }
+      image(sushiBar, -100, -145);
 }
 
-}
 
 function screenScroll(){
   if( kickstart == true ){
