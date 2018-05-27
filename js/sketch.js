@@ -5,6 +5,8 @@ var Engine = Matter.Engine,
 World = Matter.World,
     //Creamos los bodies ( array )
 Bodies = Matter.Bodies;
+
+    //Lista de variables
 var engine;
 var box;
 var boxes = [];
@@ -15,25 +17,29 @@ var scroll = 0;
 var kickstart = false;
 var isGameOver;
 var meshi;
+var leftJump;
+var rightJump;
 var floor;
 var bg;
 var sushiBar;
-
 var mybird;
 
 
 function preload(){
-  // load images
+// Load PNG, GIF.
 //meshi = loadGif('data/test.gif');
   meshi = loadAnimation("data/comp/standby1.png", "data/comp/standby17.png");
   floor = loadImage("data/base.png");
+  leftJump  = loadAnimation("data/leftSprite/leftSprite0.png","data/leftSprite/leftSprite9.png");
+  rightJump = loadAnimation("data/rightSprite/rightSprite0.png","data/rightSprite/rightSprite9.png");
+
+
 }
 
 function setup() {
-//Crear canvas
+
     isGameOver = false;
     createCanvas(window.innerWidth, 580);
-    //left 35% width 800px margin-left: -200px;
     canvas.style = "position:fixed; left: 0%; width: 100%;";
     engine = Engine.create();
     world = engine.world;
@@ -100,6 +106,7 @@ $( document ).ready( function(){
 
   $('#left').on( 'touchstart', function(){
     kickstart = true;
+
     var posX = box.body.position.x;
     var posY = box.body.position.y;
     Matter.Body.applyForce(box.body, { x: posX, y: posY }, { x: -0.05, y:-0.1 });
@@ -131,6 +138,32 @@ function draw() {
     animation(meshi,box.body.position.x +150, box.body.position.y +390, 10, 10);
     pop();
 
+    push();
+    scale(0.23);
+    animation(leftJump,box.body.position.x+700, box.body.position.y +1250, 10, 10);
+    pop();
+
+    push();
+    scale(0.23);
+    animation(rightJump,box.body.position.x + 100 , box.body.position.y +800, 10, 10);
+    pop();
+
+
+
+// Sprite Left & Right
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ///Eliminar cosas del espacio
 for (var i = 0; i < boxes.length; i++) {
@@ -160,8 +193,8 @@ for (var i = 0; i < boxes.length; i++) {
       rectMode(CORNERS);
       rect(0,0,window.innerWidth,window.innerHeight);
       fill(211,211,211);
-      text("Game Over!", 22, 200);
-      textSize(60);
+      text("Game Over!", 150, 300);
+      textSize(100);
       setTimeout( function(){
         window.location.assign("index.html");
       }, 2000);
@@ -171,7 +204,7 @@ for( var i = 0; i < elements.length; i++ ){
   rectMode( CORNERS )
   image(floor, elements[i].position.x - 55, elements[i].position.y - 60, 110, 110);
       }
-      image(sushiBar, -100, -145);
+      image(sushiBar, -12, -727);
 }
 
 
