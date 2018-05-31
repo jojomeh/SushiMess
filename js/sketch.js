@@ -22,7 +22,7 @@ var leftJump;
 var rightJump;
 var floor;
 var food;
-var sky;
+//var sky;
 var bg;
 var sushiBar;
 var mybird;
@@ -78,7 +78,6 @@ function setup() {
     barra4.height= 15;
 
     barra5 = Bodies.rectangle(0, 0, 100, 15, options);
-    rectMode
     barra5.width = 100;
     barra5.height= 15;
 
