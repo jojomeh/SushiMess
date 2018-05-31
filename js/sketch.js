@@ -37,7 +37,7 @@ function preload(){
   floor = loadImage("data/base.png");
   leftJump  = loadAnimation("data/leftSprite/leftSprite0.png","data/leftSprite/leftSprite9.png");
   rightJump = loadAnimation("data/rightSprite/rightSprite0.png","data/rightSprite/rightSprite9.png");
-  food = loadImage("data");
+
 
 }
 
@@ -241,12 +241,6 @@ function screenScroll(){
       elements.push(barra);
 
 //comida
-
-      var barra = Bodies.rectangle( cajita,  -30, 100, 15 ,options);
-      barra.width = 50;
-      barra.height = 50;
-
-      elements.push(barra);
 
       World.add( world, barra );
 
