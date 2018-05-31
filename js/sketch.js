@@ -239,11 +239,17 @@ function screenScroll(){
       barra.width = 100;
       barra.height = 15;
       elements.push(barra);
-
+  World.add( world, barra );
 //comida
 
-      World.add( world, barra );
+/*      var barra = Bodies.rectangle( cajita,  -30, 100, 15 ,options);
+      barra.width = 50;
+      barra.height = 50;
 
+      elements.push(barra);
+
+      World.add( world, barra );
+*/
 
 
 
