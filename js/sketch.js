@@ -6,6 +6,7 @@ World = Matter.World,
     //Creamos los bodies ( array )
 Bodies = Matter.Bodies;
 
+
     //Lista de variables
 var engine;
 var box;
@@ -20,9 +21,13 @@ var meshi;
 var leftJump;
 var rightJump;
 var floor;
+var food;
+var sky;
 var bg;
 var sushiBar;
 var mybird;
+var score;
+
 
 
 function preload(){
@@ -32,13 +37,15 @@ function preload(){
   floor = loadImage("data/base.png");
   leftJump  = loadAnimation("data/leftSprite/leftSprite0.png","data/leftSprite/leftSprite9.png");
   rightJump = loadAnimation("data/rightSprite/rightSprite0.png","data/rightSprite/rightSprite9.png");
-
+  food = loadImage("data");
 
 }
 
 function setup() {
 
+
     isGameOver = false;
+    score = 0;
     createCanvas(window.innerWidth, 580);
     canvas.style = "position:fixed; left: 0%; width: 100%;";
     engine = Engine.create();
@@ -69,12 +76,29 @@ function setup() {
     barra4 = Bodies.rectangle(200, 100, 100, 15, options);
     barra4.width = 100;
     barra4.height= 15;
-    /*barra5 = Bodies.rectangle(600, 290, 200, 15, options);
-    barra5.width = 200;
-    barra5.height= 15;*/
+
+    barra5 = Bodies.rectangle(0, 0, 100, 15, options);
+    rectMode
+    barra5.width = 100;
+    barra5.height= 15;
+
+    barra6 = Bodies.rectangle(375, 0, 100, 15, options);
+    barra6.width = 100;
+    barra6.height= 15;
+
+
+
+    /*sky = Bodies.rectangle(width/2, -200, width, 50, { isStatic: true } );
+    sky.width = width;
+    sky.height= 15;*/
+
+
     ground = Bodies.rectangle(190, height, width, 100, options);
     ground.width = width;
     ground.height= 100;
+
+
+
     wallLeft = Bodies.rectangle(0, 0, 20, 9000 ,options);
     wallLeft.width = 20;
     wallLeft.height= 15000;
@@ -82,12 +106,14 @@ function setup() {
     wallRight.width = 20;
     wallRight.height= 15000;
 
-    //elements.push(barra5);
-    elements.push(barra2);
-    elements.push(barra3);
+    elements.push(barra6);
+    elements.push(barra5);
     elements.push(barra4);
+    elements.push(barra3);
+    elements.push(barra2);
     elements.push(barra1);
     elements.push(ground);
+    //elements.push(sky);
     elements.push(wallLeft);
     elements.push(wallRight);
     World.add(world, elements);
@@ -97,15 +123,16 @@ function setup() {
 
 $( document ).ready( function(){
 
-  $('#top').on( 'touchstart', function(){
 
-    var posX = box.body.position.x;
-    var posY = box.body.position.y;
-    Matter.Body.applyForce(box.body, { x:posX , y:posY }, { x: 0, y: -0.1});
-  });
 
   $('#left').on( 'touchstart', function(){
     kickstart = true;
+
+
+
+    //if('touchstart'("#left"){
+    //meshi.changeAnimation("leftJump");}
+
 
     var posX = box.body.position.x;
     var posY = box.body.position.y;
@@ -128,54 +155,33 @@ function reseSketch(){
 
 //Plataformas para saltar
 function draw() {
+      score = score + 1;
       box.body.angle = 0;
       background(bg);
-    //console.log( box.body.position.y );
+    vel=box.body.velocity.x;
+  push();
+      if (vel < -.6){
+        animation(leftJump,box.body.position.x-120, box.body.position.y +20, 10, 10);
+    } else if (vel > .6){
+        animation(rightJump,box.body.position.x-30, box.body.position.y+20, 10, 10);
+    } else {
+
+        animation(meshi,box.body.position.x-4 ,box.body.position.y-45 , 10, 10);
+
+    }
+      pop();
 
     box.show();
-    push();
-    scale(0.5);
-    animation(meshi,box.body.position.x +150, box.body.position.y +390, 10, 10);
-    pop();
-
-    push();
-    scale(0.23);
-    animation(leftJump,box.body.position.x+700, box.body.position.y +1250, 10, 10);
-    pop();
-
-    push();
-    scale(0.23);
-    animation(rightJump,box.body.position.x + 100 , box.body.position.y +800, 10, 10);
-    pop();
-
-
-
-// Sprite Left & Right
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ///Eliminar cosas del espacio
 for (var i = 0; i < boxes.length; i++) {
     boxes[i].show();
     if (boxes[i].offScreen()){
-
       boxes.splice(i, 1);
       i--;
     }
 }
 ///
-
 
 //Scroll de toda la hoja
   screenScroll();
@@ -193,11 +199,15 @@ for (var i = 0; i < boxes.length; i++) {
       rectMode(CORNERS);
       rect(0,0,window.innerWidth,window.innerHeight);
       fill(211,211,211);
-      text("Game Over!", 150, 300);
-      textSize(100);
+      textSize(40);
+      textFont('Helvetica');
+      textStyle(BOLD);
+      text("Game Over!", 80, 300);
+      textSize(20);
+      text(("Score: " + score ), 60, 350);
       setTimeout( function(){
         window.location.assign("index.html");
-      }, 2000);
+      }, 1500);
       console.log("game over");
     }
 for( var i = 0; i < elements.length; i++ ){
@@ -205,6 +215,8 @@ for( var i = 0; i < elements.length; i++ ){
   image(floor, elements[i].position.x - 55, elements[i].position.y - 60, 110, 110);
       }
       image(sushiBar, -12, -727);
+
+      console.log( box.body.velocity.x );
 }
 
 
@@ -221,11 +233,26 @@ function screenScroll(){
         restitution:0,
         isStatic: true
       }
-      var barra = Bodies.rectangle( Math.random() * width,  0, 100, 15 ,options);
+      var cajita = (Math.random() * width);
+
+      var barra = Bodies.rectangle( cajita,  0, 100, 15 ,options);
       barra.width = 100;
       barra.height = 15;
       elements.push(barra);
+
+//comida
+
+      var barra = Bodies.rectangle( cajita,  -30, 100, 15 ,options);
+      barra.width = 50;
+      barra.height = 50;
+
+      elements.push(barra);
+
       World.add( world, barra );
+
+
+
+
     }
   }
 }

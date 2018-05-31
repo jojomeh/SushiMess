@@ -34,7 +34,7 @@ this.removeFromWorld = function (){
 
 
 
-    rect(0, 0, this.w, this.h);
+    //rect(0, 0, this.w, this.h);
     pop();
  }
 }
