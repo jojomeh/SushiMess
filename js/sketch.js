@@ -127,13 +127,6 @@ $( document ).ready( function(){
 
   $('#left').on( 'touchstart', function(){
     kickstart = true;
-
-
-
-    //if('touchstart'("#left"){
-    //meshi.changeAnimation("leftJump");}
-
-
     var posX = box.body.position.x;
     var posY = box.body.position.y;
     Matter.Body.applyForce(box.body, { x: posX, y: posY }, { x: -0.05, y:-0.1 });
@@ -141,8 +134,9 @@ $( document ).ready( function(){
 
   $('#right').on( 'touchstart', function(){
     kickstart = true;
-
-    Matter.Body.applyForce(box.body, { x:  box.body.position.x;, y: box.body.position.y;}, { x: 0.05, y:-0.1});
+    var posX = box.body.position.x;
+    var posY = box.body.position.y;
+    Matter.Body.applyForce(box.body, { x: posX;, y: posY }, { x: 0.05, y:-0.1});
   });
 
 });//documentready
