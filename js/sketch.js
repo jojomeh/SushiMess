@@ -10,10 +10,13 @@ var Engine = Matter.Engine,
 var engine;
 var box;
 var boxes = [];
+var items = [];
+var itemsY = [];
 var world;
 var elements = [];
 var factorIncremento = 1;
 var scroll = 0;
+var scrollTotal = 0;
 var kickstart = false;
 var isGameOver;
 var meshi;
@@ -41,17 +44,25 @@ function preload() {
     floor = loadImage("data/base.png");
     leftJump = loadAnimation("data/leftSprite/leftSprite0.png", "data/leftSprite/leftSprite9.png");
     rightJump = loadAnimation("data/rightSprite/rightSprite0.png", "data/rightSprite/rightSprite9.png");
-    lose = loadSound("audio/lose.wav");
-    soundLeft = loadSound("audio/left.wav");
-    soundRight = loadSound("audio/right.wav");
+    lose = loadSound("audio/lose.mp3");
+    soundLeft = loadSound("audio/left.mp3");
+    soundRight = loadSound("audio/right.mp3");
     for (var i = 1; i < 8; i++) {
-        var path = "audio/t" + i + ".wav";
+        var path = "audio/t" + i + ".mp3";
         sounds.push(loadSound(path));
     }
 }
 
 function setup() {
   //MUSICA
+    //Termina MUSICA
+
+    //alert("WELLCOME TO SUSHIMESS");
+
+   //alert("TAP LEFT TO JUMP LEFT");
+   //alert("TAP RIGHT TO JUMP RIGHT");
+   //alert("START!");
+
     amp = new p5.Amplitude();
     sounds[1].loop();
     sounds[2].loop();
@@ -60,8 +71,6 @@ function setup() {
 
     sounds[1].addCue(5.3,soundPack1);
     sounds[2].addCue(10.6,soundPack2);
-
-    //Termina MUSICA
     isGameOver = false;
     score = 0;
     createCanvas(window.innerWidth, 580);
@@ -117,10 +126,10 @@ function setup() {
     ground.width = width;
     ground.height = 100;
 
-    wallLeft = Bodies.rectangle(0, 0, 20, 9000, options);
+    wallLeft = Bodies.rectangle(0, 0, 20, 90000, options);
     wallLeft.width = 20;
     wallLeft.height = 15000;
-    wallRight = Bodies.rectangle(width, 0, 20, 9000, options);
+    wallRight = Bodies.rectangle(width, 0, 20, 90000, options);
     wallRight.width = 20;
     wallRight.height = 15000;
 
@@ -152,8 +161,9 @@ $(document).ready(function() {
             x: -0.05,
             y: -0.1
         });
+        soundLeft.setVolume(0.1);
         soundLeft.play();
-        soundLeft.setVolume(0.2);
+
 
     });
 
@@ -169,8 +179,9 @@ $(document).ready(function() {
             x: 0.05,
             y: -0.1
         });
+        soundRight.setVolume(0.1);
         soundRight.play();
-        soundRight.setVolume(0.15);
+
 
     });
 
@@ -188,8 +199,8 @@ function soundPack1(){
 }
 
 function soundPack2(){
-  sounds[0].loop();
-  sounds[0].setVolume(0.4);
+
+
   sounds[3].loop();
   sounds[3].setVolume(0.4);
   sounds[6].loop();
@@ -201,7 +212,7 @@ function death(){
   if (box.offScreen()) {
 
       box.removeFromWorld();
-      sounds[0].stop();
+
 
       sounds[4].stop();
       sounds[5].stop();
@@ -238,7 +249,7 @@ function draw() {
 //MUSICA e imagen
     push();
     var vol = amp.getLevel();
-    var diam = map(vol, 0, 0.4, 1, 100);
+    var diam = map(vol, 0, 0.4, 1, 10);
     image(bgi, 0, 0 - diam, bgi.width / 2, bgi.height / 2 - diam );
     pop();
 // termina MUSICA
@@ -289,6 +300,14 @@ function draw() {
 function screenScroll() {
     //console.log( scroll );
     //sky.position.y = scroll;
+    for( var i = 0; i < items.length; i++ ){
+      items[ i ].show( scrollTotal );
+      if( dist( box.body.position.x, box.body.position.y, items[ i ].x, items[ i ].y ) < 50 ){
+        items.splice(i, 1);
+      }
+
+    }
+
     if (kickstart == true) {
         for (var i = 0; i < elements.length; i++) {
             Matter.Body.translate(elements[i], {
@@ -297,6 +316,7 @@ function screenScroll() {
             });
         }
         scroll += factorIncremento;
+        scrollTotal += factorIncremento;
         //
         if (scroll >= 150) {
             scroll = 0;
@@ -312,15 +332,21 @@ function screenScroll() {
             barra.height = 15;
             elements.push(barra);
             World.add(world, barra);
+
             //comida
+            var randomItem = Math.round(Math.random()*3);
+            //if( randomItem > 1 ){
+              items.push( new Item(cajita, -30, 30, 30, scrollTotal ) );
+            //var barra = Bodies.rectangle(cajita, -30, 100, 15, options);
+            //barra.width = 50;
+            //barra.height = 50;
+          //}
 
-            var barra = Bodies.rectangle(cajita, -30, 100, 15, options);
-            barra.width = 50;
-            barra.height = 50;
 
-            elements.push(barra);
 
-            World.add(world, barra);
+            //elements.push(barra);
+
+            //World.add(world, barra);
         }
          death();
     }
