@@ -343,6 +343,7 @@ function screenScroll() {
 
         }
 
-         death();
+
     }
+     death();
 }
