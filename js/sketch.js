@@ -35,6 +35,7 @@ var sounds = [];
 var lose;
 var soundLeft;
 var soundRight;
+var a;
 
 
 function preload() {
@@ -57,11 +58,10 @@ function setup() {
   //MUSICA
     //Termina MUSICA
 
-    //alert("WELLCOME TO SUSHIMESS");
-
-   //alert("TAP LEFT TO JUMP LEFT");
-   //alert("TAP RIGHT TO JUMP RIGHT");
-   //alert("START!");
+   alert("WELLCOME TO SUSHIMESS");
+   alert("TAP LEFT TO JUMP LEFT");
+   alert("TAP RIGHT TO JUMP RIGHT");
+   alert("START!");
 
     amp = new p5.Amplitude();
     sounds[1].loop();
@@ -229,7 +229,7 @@ function death(){
       textStyle(BOLD);
       text("Game Over!", 80, 300);
       textSize(20);
-      text(("Score: " + score), 60, 350);
+      text(("Score: " + a), 60, 350);
       setTimeout(function() {
           window.location.assign("index.html");
       }, 4500);
@@ -300,10 +300,13 @@ function draw() {
 function screenScroll() {
     //console.log( scroll );
     //sky.position.y = scroll;
-    for( var i = 0; i < items.length; i++ ){
-      items[ i ].show( scrollTotal );
-      if( dist( box.body.position.x, box.body.position.y, items[ i ].x, items[ i ].y ) < 50 ){
-        items.splice(i, 1);
+    for( var a = 0; a < items.length; a++ ){
+      items[ a ].show( scrollTotal );
+      if( dist( box.body.position.x, box.body.position.y, items[ a ].x, items[ a ].y ) < 50 ){
+        items.splice(a, 1);
+
+        var puntos = (a);
+          console.log( "me comí: " + a );
       }
 
     }
@@ -334,20 +337,12 @@ function screenScroll() {
             World.add(world, barra);
 
             //comida
+          //console.log( "box: " + Item + ", " + Item );
             var randomItem = Math.round(Math.random()*3);
-            //if( randomItem > 1 ){
               items.push( new Item(cajita, -30, 30, 30, scrollTotal ) );
-            //var barra = Bodies.rectangle(cajita, -30, 100, 15, options);
-            //barra.width = 50;
-            //barra.height = 50;
-          //}
 
-
-
-            //elements.push(barra);
-
-            //World.add(world, barra);
         }
+
          death();
     }
 }
