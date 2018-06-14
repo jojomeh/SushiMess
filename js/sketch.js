@@ -35,19 +35,23 @@ var sounds = [];
 var lose;
 var soundLeft;
 var soundRight;
+var eatSound;
 var a;
+var sushi1;
 
 
 function preload() {
     // Load PNG, GIF.
     //meshi = loadGif('data/test.gif');
     meshi = loadAnimation("data/comp/standby1.png", "data/comp/standby17.png");
+    sushi1 = loadImage("data/comp/sushi1/sushi1.png");
     floor = loadImage("data/base.png");
     leftJump = loadAnimation("data/leftSprite/leftSprite0.png", "data/leftSprite/leftSprite9.png");
     rightJump = loadAnimation("data/rightSprite/rightSprite0.png", "data/rightSprite/rightSprite9.png");
     lose = loadSound("audio/lose.mp3");
     soundLeft = loadSound("audio/left.mp3");
     soundRight = loadSound("audio/right.mp3");
+    eatSound = loadSound("audio/eat.mp3");
     for (var i = 1; i < 8; i++) {
         var path = "audio/t" + i + ".mp3";
         sounds.push(loadSound(path));
@@ -64,6 +68,10 @@ function setup() {
    alert("START!");
 
     amp = new p5.Amplitude();
+    //wave = new p5.Amplitude();
+    //wave.setType('sine');
+    //wave.freq(440);
+    //wave.amp(0);
     sounds[1].loop();
     sounds[2].loop();
     sounds[1].setVolume(0.4);
@@ -165,6 +173,8 @@ $(document).ready(function() {
         soundLeft.play();
 
 
+
+
     });
 
     $('#right').on('touchstart', function() {
@@ -217,9 +227,11 @@ function death(){
       sounds[4].stop();
       sounds[5].stop();
       sounds[6].stop();
+
       lose.play();
       lose.setVolume(0.4);
       lose.stop();
+      push();
       fill(0);
       rectMode(CORNERS);
       rect(0, 0, window.innerWidth, window.innerHeight);
@@ -230,6 +242,7 @@ function death(){
       text("Game Over!", 80, 300);
       textSize(20);
       text(("Score: " + a), 60, 350);
+      pop();
       setTimeout(function() {
           window.location.assign("index.html");
       }, 4500);
@@ -304,7 +317,8 @@ function screenScroll() {
       items[ a ].show( scrollTotal );
       if( dist( box.body.position.x, box.body.position.y, items[ a ].x, items[ a ].y ) < 50 ){
         items.splice(a, 1);
-
+        eatSound.setVolume(1);
+        eatSound.play();
         var puntos = (a);
           console.log( "me comí: " + a );
       }
@@ -340,6 +354,8 @@ function screenScroll() {
           //console.log( "box: " + Item + ", " + Item );
             var randomItem = Math.round(Math.random()*3);
               items.push( new Item(cajita, -30, 30, 30, scrollTotal ) );
+
+
 
         }
 

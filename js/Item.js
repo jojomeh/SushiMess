@@ -12,8 +12,11 @@ function Item(x, y, w, h, scroll){
     //translate(x, escrolleo);
     this.y = y + (escrolleo - scroll);
     rectMode(CENTER);
-    fill(255,9,70);
-    ellipse( x, this.y, w, h );
+
+    image(sushi1, x - 40, this.y - 65, w+63, h +50);
+
+
+
     pop();
  }
 }
